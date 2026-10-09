@@ -17,10 +17,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-    String[] nomes = new String[]{"Robson", "João", "Julia", "Kiara", "Braian", "Marcelo", "Boos", "Beninca"};
+    ArrayList<String> nomes;
+
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,16 +35,23 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        nomes = new ArrayList<String>();
+
         ListView lv = findViewById(R.id.Lista);
-        ArrayAdapter<String> USB = new ArrayAdapter<>(getApplicationContext(), R.layout.item_da_lista , R.id.textView, nomes);
+        ArrayAdapter<String> USB = new ArrayAdapter<>(getApplicationContext(), R.layout.item_da_lista, R.id.textView, nomes);
         lv.setAdapter(USB);
         lv.setOnItemClickListener((parent, view, position, id) -> {
-            Toast.makeText(getApplicationContext(),nomes[position],Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), nomes.get(position), Toast.LENGTH_LONG).show();
 
         });
 
 
+        TextView nome = findViewById(R.id.nome);
+        Button cadastrar = findViewById(R.id.cadastrar);
+        cadastrar.setOnClickListener(view -> {
+            nomes.add(nome.getText().toString());
+            USB.notifyDataSetChanged();
 
+        });
     }
-
 }
